@@ -2,6 +2,8 @@
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
+const apiRoutes = require('./routes/apiRoutes');
+const htmlRoutes = require('./routes/htmlRoutes');
 
 //initialize express app 
 const app = express();
@@ -11,20 +13,12 @@ const PORT = process.env.PORT || 3001;
 
 //parse incoming string or array data, converst to key/value pairing
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
-//parse incoming JSON data
 app.use(express.json());
+app.use(express.static("public"));
 
-
-
-//app get for notes
-app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/notes.html'));
-});
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/index.html'));
-});
+//set up routes
+app.use('/api', apiRoutes);
+app.use('/', htmlRoutes);
 
 app.get('/api/notes', (req, res) => {
     fs.readFile(path.join(__dirname, '/db/db.json'));
