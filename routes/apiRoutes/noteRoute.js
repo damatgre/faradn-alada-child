@@ -3,12 +3,21 @@ const router = require("express").Router();
 const { v4: uuidv4 } = require('uuid');
 let noteSpot = require('../../db/db.json');
 
-router.get('/notes/:id', (req, res) => {
+router.get('/notes', (req, res) => {
     let entry = JSON.parse(fs.readFileSync('./db/db.json'));
     
     noteSpot = entry;
 
     res.json(noteSpot);
+})
+
+router.get('/notes/:id', (req, res) => {
+    const savedNote = findbyId(req.params.id, noteSpot);
+    if(result) {
+        res.json(result);
+    } else {
+        res.send(404);
+    }
 });
 
 router.post('/notes', (req, res) => {
@@ -28,10 +37,10 @@ router.post('/notes', (req, res) => {
 
 });
 
-router.delete('/notes/:id', (req, res) => {
-    const delNote = req.params.id;
+// router.delete('/notes/:id', (req, res) => {
+//     const delNote = req.params.id;
 
 
-});
+// });
 
 module.exports = router;
