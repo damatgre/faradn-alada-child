@@ -24,8 +24,10 @@ router.post('/notes', (req, res) => {
     let newNote = {
         id: uuidv4(),
         title: req.body.title,
-        note: req.body.text
-    }
+        text: req.body.text
+    };
+
+    console.log(newNote);
 
     noteSpot.push(newNote);
 
