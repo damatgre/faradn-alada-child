@@ -54,8 +54,9 @@ router.post('/notes', (req, res) => {
 
 // router.delete('/notes/:id', (req, res) => {
     
+    
 //     //variable used to delete specific note
-//     const delNote = req.params.id;
+//     const delNote = noteSpot.find(({ id }) => id === JSON.parse(req.params.id));
 
 //     console.log(delNote);
 
