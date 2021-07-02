@@ -9,12 +9,12 @@ router.get('/notes', (req, res) => {
     noteSpot = entry;
 
     res.json(noteSpot);
-})
+});
 
 router.get('/notes/:id', (req, res) => {
-    const savedNote = findbyId(req.params.id, noteSpot);
-    if(result) {
-        res.json(result);
+    const savedNote = findById(req.params.id, noteSpot);
+    if(savedNote) {
+        res.json(savedNote);
     } else {
         res.send(404);
     }
@@ -40,6 +40,9 @@ router.post('/notes', (req, res) => {
 // router.delete('/notes/:id', (req, res) => {
 //     const delNote = req.params.id;
 
+//     console.log(delNote);
+
+//     res.end();
 
 // });
 
