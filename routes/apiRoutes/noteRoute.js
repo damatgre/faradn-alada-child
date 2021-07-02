@@ -8,7 +8,7 @@ let noteSpot = require('../../db/db.json');
 router.get('/notes', (req, res) => {
     //read json file
     let entry = JSON.parse(fs.readFileSync('./db/db.json'));
-    
+
     noteSpot = entry;
 
     //send response
@@ -19,7 +19,7 @@ router.get('/notes', (req, res) => {
 router.get('/notes/:id', (req, res) => {
     //variable to search for note
     const savedNote = findById(req.params.id, noteSpot);
-    if(savedNote) {
+    if (savedNote) {
         //if found give specific note
         res.json(savedNote);
     } else {
@@ -44,31 +44,37 @@ router.post('/notes', (req, res) => {
 
     //write data to json file
     fs.writeFileSync("./db/db.json", JSON.stringify(noteSpot), function (err) {
-            if (err) 
+        if (err)
             throw err;
-        })
-        //send response
+    })
+    //send response
     res.json(noteSpot);
 
 });
 
-// router.delete('/notes/:id', (req, res) => {
-    
-    
-//     //variable used to delete specific note
-//     const delNote = noteSpot.find(({ id }) => id === JSON.parse(req.params.id));
+router.delete('/notes/:id', (req, res) => {
 
-//     console.log(delNote);
+    //variable used to delete specific note
+    const delNote = req.params.id;
 
-//     //read data of json file/where notes are stored
-//     let entry = JSON.parse(fs.readFileSync('./db/db.json'));
+    //console.log(delNote);
 
-//     let newArray = entry.filter( delNote => delNote.id.toString() !== delNote);
+    //read data of json file/where notes are stored
+    let entry = JSON.parse(fs.readFileSync('./db/db.json'));
 
-//     fs.writeFileSync('./db/db.json', JSON.stringify(newArray));
-    
-//     res.json(newArray);
+    //create a new array that filters out the deleted note
+    newArray = entry.filter(thisNote => {
+        return thisNote.id != delNote;
+    });
 
-// });
+
+    //console.log(newArray);
+
+    //update new with deleted note
+    fs.writeFileSync('./db/db.json', JSON.stringify(newArray));
+
+    res.json(newArray);
+
+});
 
 module.exports = router;
