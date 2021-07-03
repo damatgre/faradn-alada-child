@@ -71,6 +71,7 @@ router.delete('/notes/:id', (req, res) => {
     //update new with deleted note
     fs.writeFileSync('./db/db.json', JSON.stringify(newArray));
 
+    //sending back new db.json
     res.json(newArray);
 
 });
